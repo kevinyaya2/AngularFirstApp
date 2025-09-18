@@ -41,33 +41,46 @@ button {
 .search-bar {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 12px; /* 控制輸入框和按鈕之間的間距 */
   margin-bottom: 20px;
 }
 
-.search-bar input {
-  width: 250px;   /* ✅ 固定寬度，不會太長 */
-  max-width: 100%; /* 保證在小螢幕不會爆掉 */
+.search-bar input[type="text"] {
+  flex: 0 1 250px; /* 固定大約 250px，不會過長 */
   padding: 8px 12px;
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease-in-out;
 }
 
-.search-bar button {
-  padding: 8px 16px;
-  border-radius: 6px;
+.search-bar input[type="text"]:focus {
+  border-color: #3f51b5; /* 聚焦時顏色 */
+}
+
+button.primary,
+button[mat-raised-button] {
+  padding: 6px 16px;
   font-size: 14px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: background-color 0.2s ease-in-out;
 }
 
-.search-bar .primary {
+button.primary:hover,
+button[mat-raised-button]:hover {
   background-color: #5c6bc0;
-  color: white;
-  border: none;
+  color: #fff;
+}
+td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+  color: #333; /* 讓表格文字更深，對比度高 */
 }
 
-.search-bar .primary:hover {
-  background-color: #3f4da0;
+/* hover 效果 */
+tr:hover td {
+  background-color: #f1f5ff;
 }

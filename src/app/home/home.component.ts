@@ -1,10 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HousingLocationComponent } from '../housing-location/housing-location.component';
 import { HousingLocation } from '../housinglocation';
 import { HousingService } from '../housing.service';
 
-// Angular Material standalone imports
+// Angular Material
 import {
   MatTable,
   MatHeaderCell,
@@ -22,6 +22,9 @@ import { MatButton } from '@angular/material/button';
 // Pipe
 import { FirstNamePipe } from '../first-name.pipe';
 
+// RxJS
+import { Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -30,11 +33,11 @@ import { FirstNamePipe } from '../first-name.pipe';
     HousingLocationComponent,
     MatTable,
     MatHeaderCell,
-    MatHeaderCellDef,   
+    MatHeaderCellDef,
     MatHeaderRow,
     MatHeaderRowDef,
     MatCell,
-    MatCellDef,         
+    MatCellDef,
     MatRow,
     MatRowDef,
     MatColumnDef,
@@ -44,19 +47,21 @@ import { FirstNamePipe } from '../first-name.pipe';
   template: `
     <section>
       <form class="search-bar">
-        <input type="text" placeholder="Filter by city" #filter />
-        <button class="primary" type="button" (click)="filterResults(filter.value)">Search</button>
+        <!-- 傳整個 $event 進來，TS 再轉換 -->
+        <input 
+          type="text" 
+          placeholder="Filter by city" 
+          (input)="onSearch($event)" />
+        
         <button mat-raised-button color="primary" type="button" (click)="toggleView()">
           {{ isTableView ? '卡片模式' : '表格模式' }}
         </button>
       </form>
     </section>
 
-    <!-- Table View -->
+    <!-- 表格模式 -->
     <section *ngIf="isTableView; else cardView">
       <table mat-table [dataSource]="filteredLocationList" class="mat-elevation-z8">
-
-        <!-- FirstName Column -->
         <ng-container matColumnDef="firstName">
           <th mat-header-cell *matHeaderCellDef> First Name </th>
           <td mat-cell *matCellDef="let element">
@@ -69,7 +74,7 @@ import { FirstNamePipe } from '../first-name.pipe';
       </table>
     </section>
 
-    <!-- Card View -->
+    <!-- 卡片模式 -->
     <ng-template #cardView>
       <section class="results">
         <app-housing-location
@@ -81,7 +86,7 @@ import { FirstNamePipe } from '../first-name.pipe';
   `,
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit, OnDestroy {
   housingLocationList: HousingLocation[] = [];
   filteredLocationList: HousingLocation[] = [];
   housingService: HousingService = inject(HousingService);
@@ -89,11 +94,38 @@ export class HomeComponent {
   isTableView = false;
   displayedColumns: string[] = ['firstName'];
 
+  // RxJS
+  private searchSubject = new Subject<string>();
+  private destroy$ = new Subject<void>();
+
   constructor() {
     this.housingService.getAllHousingLocations().then((housingLocationList: HousingLocation[]) => {
       this.housingLocationList = housingLocationList;
       this.filteredLocationList = housingLocationList;
     });
+  }
+
+  ngOnInit() {
+    this.searchSubject
+      .pipe(
+        debounceTime(1000), // 等待輸入停止 1 秒
+        distinctUntilChanged(),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((text) => {
+        this.filterResults(text);
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  // 從 template 接到 $event
+  onSearch(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.searchSubject.next(input.value);
   }
 
   filterResults(text: string) {
