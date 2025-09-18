@@ -1,0 +1,16 @@
+# Angular build output
+dist/
+.angular/cache/
+
+# Dependencies
+node_modules/
+
+# IDE/Editor settings
+.vscode/
+.idea/
+*.swp
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
