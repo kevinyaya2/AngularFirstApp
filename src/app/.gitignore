@@ -1,6 +1,6 @@
 # Angular build output
 dist/
-.angular/cache/
+.angular/
 
 # Dependencies
 node_modules/

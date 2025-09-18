@@ -38,3 +38,36 @@ button {
       grid-template-columns: 1fr;
   }    
 }
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  width: 250px;   /* ✅ 固定寬度，不會太長 */
+  max-width: 100%; /* 保證在小螢幕不會爆掉 */
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.search-bar button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.search-bar .primary {
+  background-color: #5c6bc0;
+  color: white;
+  border: none;
+}
+
+.search-bar .primary:hover {
+  background-color: #3f4da0;
+}
