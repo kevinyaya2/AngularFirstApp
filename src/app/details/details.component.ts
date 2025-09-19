@@ -1,9 +1,11 @@
-import {Component, inject} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {ActivatedRoute} from '@angular/router';
-import {HousingService} from '../housing.service';
-import {HousingLocation} from '../housinglocation';
-import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { HousingService } from '../housing.service';
+import { HousingLocation } from '../housinglocation';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+
 @Component({
   selector: 'app-details',
   imports: [CommonModule, ReactiveFormsModule],
@@ -29,14 +31,32 @@ import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
       </section>
       <section class="listing-apply">
         <h2 class="section-heading">Apply now to live here</h2>
-        <form [formGroup]="applyForm" (submit)="submitApplication()">
+        <form [formGroup]="applyForm" (ngSubmit)="submitApplication()">
           <label for="first-name">First Name</label>
           <input id="first-name" type="text" formControlName="firstName" />
+          <div *ngIf="applyForm.get('firstName')?.hasError('required') && applyForm.get('firstName')?.touched" class="error">
+            First name is required
+          </div>
+          <div *ngIf="applyForm.get('firstName')?.hasError('duplicate')" class="error">
+            This first name already exists
+          </div>
+
           <label for="last-name">Last Name</label>
           <input id="last-name" type="text" formControlName="lastName" />
+          <div *ngIf="applyForm.get('lastName')?.hasError('required') && applyForm.get('lastName')?.touched" class="error">
+            Last name is required
+          </div>
+
           <label for="email">Email</label>
           <input id="email" type="email" formControlName="email" />
-          <button type="submit" class="primary">Apply now</button>
+          <div *ngIf="applyForm.get('email')?.hasError('required') && applyForm.get('email')?.touched" class="error">
+            Email is required
+          </div>
+          <div *ngIf="applyForm.get('email')?.hasError('email') && applyForm.get('email')?.touched" class="error">
+            Invalid email format
+          </div>
+
+          <button type="submit" class="primary" [disabled]="applyForm.invalid">Apply now</button>
         </form>
       </section>
     </article>
@@ -47,22 +67,46 @@ export class DetailsComponent {
   route: ActivatedRoute = inject(ActivatedRoute);
   housingService = inject(HousingService);
   housingLocation: HousingLocation | undefined;
+
   applyForm = new FormGroup({
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    email: new FormControl(''),
+    firstName: new FormControl('', [Validators.required]),
+    lastName: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
   });
+
   constructor() {
     const housingLocationId = parseInt(this.route.snapshot.params['id'], 10);
     this.housingService.getHousingLocationById(housingLocationId).then((housingLocation) => {
       this.housingLocation = housingLocation;
     });
+
+    // firstName 即時檢查
+    this.applyForm.get('firstName')?.valueChanges
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        switchMap((value) => this.housingService.checkFirstNameExists(value ?? ''))
+      )
+      .subscribe((exists) => {
+        if (exists) {
+          this.applyForm.get('firstName')?.setErrors({ duplicate: true });
+        } else {
+          if (this.applyForm.get('firstName')?.hasError('duplicate')) {
+            this.applyForm.get('firstName')?.setErrors(null);
+          }
+        }
+      });
   }
+
   submitApplication() {
-    this.housingService.submitApplication(
-      this.applyForm.value.firstName ?? '',
-      this.applyForm.value.lastName ?? '',
-      this.applyForm.value.email ?? '',
-    );
+    if (this.applyForm.valid) {
+      this.housingService.submitApplication(
+        this.applyForm.value.firstName ?? '',
+        this.applyForm.value.lastName ?? '',
+        this.applyForm.value.email ?? ''
+      );
+      alert('資料已送出!');
+      this.applyForm.reset();
+    }
   }
 }
