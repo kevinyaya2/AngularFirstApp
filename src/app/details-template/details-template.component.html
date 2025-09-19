@@ -1,0 +1,92 @@
+<article>
+  <!-- 房屋圖片 -->
+  <img
+    class="listing-photo"
+    [src]="housingLocation?.photo"
+    alt="Exterior photo of {{ housingLocation?.name }}"
+    crossorigin
+  />
+
+  <!-- 房屋名稱與地點 -->
+  <section class="listing-description">
+    <h2 class="listing-heading">{{ housingLocation?.name }}</h2>
+    <p class="listing-location">
+      {{ housingLocation?.city }}, {{ housingLocation?.state }}
+    </p>
+  </section>
+
+  <!-- 房屋特色 -->
+  <section class="listing-features">
+    <h2 class="section-heading">About this housing location</h2>
+    <ul>
+      <li>Units available: {{ housingLocation?.availableUnits }}</li>
+      <li>Wifi: {{ housingLocation?.wifi ? 'Yes' : 'No' }}</li>
+      <li>Laundry: {{ housingLocation?.laundry ? 'Yes' : 'No' }}</li>
+    </ul>
+  </section>
+
+  <!-- Template-Driven Form -->
+  <section class="listing-apply">
+    <h2 class="section-heading">Apply now (Template-Driven)</h2>
+
+    <form #applyForm="ngForm" (ngSubmit)="submitApplication(applyForm)">
+      <!-- First Name -->
+      <label for="first-name">First Name</label>
+      <input
+        id="first-name"
+        type="text"
+        name="firstName"
+        [(ngModel)]="firstName"
+        required
+        #firstNameCtrl="ngModel"
+      />
+      <div
+        *ngIf="firstNameCtrl.invalid && firstNameCtrl.touched"
+        class="error"
+      >
+        First name is required
+      </div>
+
+      <!-- Last Name -->
+      <label for="last-name">Last Name</label>
+      <input
+        id="last-name"
+        type="text"
+        name="lastName"
+        [(ngModel)]="lastName"
+        required
+        #lastNameCtrl="ngModel"
+      />
+      <div
+        *ngIf="lastNameCtrl.invalid && lastNameCtrl.touched"
+        class="error"
+      >
+        Last name is required
+      </div>
+
+      <!-- Email -->
+      <label for="email">Email</label>
+      <input
+        id="email"
+        type="email"
+        name="email"
+        [(ngModel)]="email"
+        required
+        email
+        #emailCtrl="ngModel"
+      />
+      <div *ngIf="emailCtrl.errors?.['required'] && emailCtrl.touched" class="error">
+        Email is required
+      </div>
+      <div *ngIf="emailCtrl.errors?.['email'] && emailCtrl.touched" class="error">
+        Invalid email format
+      </div>
+
+      <!-- 按鈕區塊 -->
+      <div class="button-group">
+        <button type="submit" [disabled]="applyForm.invalid">送出</button>
+        <a routerLink="/" class="cancel-btn">取消</a>
+      </div>
+    </form>
+  </section>
+</article>

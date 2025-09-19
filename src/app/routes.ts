@@ -1,6 +1,7 @@
 import {Routes} from '@angular/router';
 import {HomeComponent} from './home/home.component';
 import {DetailsComponent} from './details/details.component';
+import { DetailsTemplateComponent } from './details-template/details-template.component';
 const routeConfig: Routes = [
   {
     path: '',
@@ -12,5 +13,6 @@ const routeConfig: Routes = [
     component: DetailsComponent,
     title: 'Home details',
   },
+  { path: 'details-template/:id', component: DetailsTemplateComponent }, // Template
 ];
 export default routeConfig;
