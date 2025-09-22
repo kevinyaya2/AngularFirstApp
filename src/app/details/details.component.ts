@@ -5,6 +5,7 @@ import { HousingService } from '../housing.service';
 import { HousingLocation } from '../housinglocation';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-details',
@@ -21,6 +22,7 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
         <h2 class="listing-heading">{{ housingLocation?.name }}</h2>
         <p class="listing-location">{{ housingLocation?.city }}, {{ housingLocation?.state }}</p>
       </section>
+
       <section class="listing-features">
         <h2 class="section-heading">About this housing location</h2>
         <ul>
@@ -29,6 +31,20 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
           <li>Does this location have laundry: {{ housingLocation?.laundry }}</li>
         </ul>
       </section>
+
+      <!--  Google Map -->
+      <section class="listing-map" *ngIf="mapUrl">
+        <h2 class="section-heading">位置地圖</h2>
+        <iframe
+          width="100%"
+          height="400"
+          style="border:0"
+          [src]="mapUrl"
+          loading="lazy"
+          allowfullscreen>
+        </iframe>
+      </section>
+
       <section class="listing-apply">
         <h2 class="section-heading">Apply now to live here</h2>
         <form [formGroup]="applyForm" (ngSubmit)="submitApplication()">
@@ -66,7 +82,10 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 export class DetailsComponent {
   route: ActivatedRoute = inject(ActivatedRoute);
   housingService = inject(HousingService);
+  sanitizer: DomSanitizer = inject(DomSanitizer);
+
   housingLocation: HousingLocation | undefined;
+  mapUrl?: SafeResourceUrl;
 
   applyForm = new FormGroup({
     firstName: new FormControl('', [Validators.required]),
@@ -78,6 +97,13 @@ export class DetailsComponent {
     const housingLocationId = parseInt(this.route.snapshot.params['id'], 10);
     this.housingService.getHousingLocationById(housingLocationId).then((housingLocation) => {
       this.housingLocation = housingLocation;
+
+      //  建立安全的 Google Map URL
+      if (housingLocation?.latitude && housingLocation?.longitude) {
+        this.mapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+          `https://maps.google.com/maps?q=${housingLocation.latitude},${housingLocation.longitude}&hl=zh-TW&z=15&output=embed`
+        );
+      }
     });
 
     // firstName 即時檢查

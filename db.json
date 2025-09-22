@@ -2,103 +2,123 @@
   "locations": [
     {
       "id": "0",
-      "name": "Acme Fresh Start Housing",
-      "city": "Chicago",
-      "state": "IL",
+      "name": "悅樂旅店‧台中站前 OLAH Poshtel Taichung",
+      "city": "台中市",
+      "state": "中區",
       "photo": "https://angular.dev/assets/images/tutorials/common/bernard-hermant-CLKGGwIBTaY-unsplash.jpg",
       "availableUnits": 4,
       "wifi": true,
-      "laundry": true
+      "laundry": true,
+      "latitude": 24.138486,
+      "longitude": 120.682506
     },
     {
       "id": "1",
-      "name": "A113 Transitional Housing",
-      "city": "Santa Monica",
-      "state": "CA",
+      "name": "台中站前二館 KIWI Hotel",
+      "city": "台中市",
+      "state": "中區",
       "photo": "https://angular.dev/assets/images/tutorials/common/brandon-griggs-wR11KBaB86U-unsplash.jpg",
       "availableUnits": 0,
       "wifi": false,
-      "laundry": true
+      "laundry": true,
+      "latitude": 24.136317,
+      "longitude": 120.681175
     },
     {
       "id": "2",
-      "name": "Warm Beds Housing Support",
-      "city": "Juneau",
-      "state": "AK",
+      "name": "In One City Inn 文華道會館",
+      "city": "台中市",
+      "state": "西屯區",
       "photo": "https://angular.dev/assets/images/tutorials/common/i-do-nothing-but-love-lAyXdl1-Wmc-unsplash.jpg",
       "availableUnits": 1,
       "wifi": false,
-      "laundry": false
+      "laundry": false,
+      "latitude": 24.183045,
+      "longitude": 120.647126
     },
     {
       "id": "3",
-      "name": "Homesteady Housing",
-      "city": "Chicago",
-      "state": "IL",
+      "name": "星享道酒店 In Sky Hotel",
+      "city": "台中市",
+      "state": "西屯區",
       "photo": "https://angular.dev/assets/images/tutorials/common/ian-macdonald-W8z6aiwfi1E-unsplash.jpg",
       "availableUnits": 1,
       "wifi": true,
-      "laundry": false
+      "laundry": false,
+      "latitude": 24.182854,
+      "longitude": 120.647113
     },
     {
       "id": "4",
-      "name": "Happy Homes Group",
-      "city": "Gary",
-      "state": "IN",
+      "name": "天閣酒店 THE Tango Taichung",
+      "city": "台中市",
+      "state": "西屯區",
       "photo": "https://angular.dev/assets/images/tutorials/common/krzysztof-hepner-978RAXoXnH4-unsplash.jpg",
       "availableUnits": 1,
       "wifi": true,
-      "laundry": false
+      "laundry": false,
+      "latitude": 24.148731,
+      "longitude": 120.64972
     },
     {
       "id": "5",
-      "name": "Hopeful Apartment Group",
-      "city": "Oakland",
-      "state": "CA",
+      "name": "愛之船 SPA 精品旅館",
+      "city": "台中市",
+      "state": "南區",
       "photo": "https://angular.dev/assets/images/tutorials/common/r-architecture-JvQ0Q5IkeMM-unsplash.jpg",
       "availableUnits": 2,
       "wifi": true,
-      "laundry": true
+      "laundry": true,
+      "latitude": 24.129773,
+      "longitude": 120.671354
     },
     {
       "id": "6",
-      "name": "Seriously Safe Towns",
-      "city": "Oakland",
-      "state": "CA",
+      "name": "波特曼休閒商務汽車旅館 Potman Motel",
+      "city": "台中市",
+      "state": "西屯區",
       "photo": "https://angular.dev/assets/images/tutorials/common/phil-hearing-IYfp2Ixe9nM-unsplash.jpg",
       "availableUnits": 5,
       "wifi": true,
-      "laundry": true
+      "laundry": true,
+      "latitude": 24.165459,
+      "longitude": 120.640837
     },
     {
       "id": "7",
-      "name": "Hopeful Housing Solutions",
-      "city": "Oakland",
-      "state": "CA",
+      "name": "虹星汽車旅舘",
+      "city": "台中市",
+      "state": "北屯區",
       "photo": "https://angular.dev/assets/images/tutorials/common/r-architecture-GGupkreKwxA-unsplash.jpg",
       "availableUnits": 2,
       "wifi": true,
-      "laundry": true
+      "laundry": true,
+      "latitude": 24.170396,
+      "longitude": 120.693977
     },
     {
       "id": "8",
-      "name": "Seriously Safe Towns",
-      "city": "Oakland",
-      "state": "CA",
+      "name": "蘭夏精品會館",
+      "city": "台中市",
+      "state": "南屯區",
       "photo": "https://angular.dev/assets/images/tutorials/common/saru-robert-9rP3mxf8qWI-unsplash.jpg",
       "availableUnits": 10,
       "wifi": false,
-      "laundry": false
+      "laundry": false,
+      "latitude": 24.148486,
+      "longitude": 120.645211
     },
     {
       "id": "9",
-      "name": "Capital Safe Towns",
-      "city": "Portland",
-      "state": "OR",
+      "name": "麗緹汽車旅館",
+      "city": "台中市",
+      "state": "北屯區",
       "photo": "https://angular.dev/assets/images/tutorials/common/webaliser-_TPTXZd9mOo-unsplash.jpg",
       "availableUnits": 6,
       "wifi": true,
-      "laundry": true
+      "laundry": true,
+      "latitude": 24.171563,
+      "longitude": 120.681467
     }
   ],
   "applications": [

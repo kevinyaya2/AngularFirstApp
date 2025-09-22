@@ -1,15 +1,22 @@
+/* 照片排版 */
 .listing-photo {
   height: 600px;
   width: 50%;
   object-fit: cover;
   border-radius: 30px;
   float: right;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  margin-bottom: 20px;
 }
+
+/* 標題 */
 .listing-heading {
   font-size: 48pt;
   font-weight: bold;
   margin-bottom: 15px;
 }
+
+/* 地點資訊 */
 .listing-location::before {
   content: url('/assets/location-pin.svg') / '';
 }
@@ -17,11 +24,16 @@
   font-size: 24pt;
   margin-bottom: 15px;
 }
-.listing-features > .section-heading {
+
+/* 區塊標題 */
+.section-heading {
   color: var(--secondary-color);
   font-size: 24pt;
   margin-bottom: 15px;
+  font-weight: bold;
 }
+
+/* 特徵區塊 */
 .listing-features {
   margin-bottom: 20px;
 }
@@ -31,6 +43,8 @@
 li {
   list-style-type: none;
 }
+
+/* 申請表單 */
 .listing-apply .section-heading {
   font-size: 18pt;
   margin-bottom: 15px;
@@ -54,9 +68,31 @@ input {
   border-left: none;
   border-bottom: solid .3px;
 }
+
+/* 🆕 地圖區塊 */
+.listing-map {
+  margin: 30px 0;
+}
+.listing-map iframe {
+  width: 100%;
+  height: 400px;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* 手機版調整 */
 @media (max-width: 1024px) {
   .listing-photo {
     width: 100%;
     height: 400px;
+    float: none;
+    border-radius: 20px;
+  }
+  input {
+    width: 100%;
+  }
+  .listing-map iframe {
+    height: 250px;
   }
 }
