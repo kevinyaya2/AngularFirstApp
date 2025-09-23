@@ -84,3 +84,65 @@ td {
 tr:hover td {
   background-color: #f1f5ff;
 }
+
+/* 隱藏原本的 mat-form-field 外框 */
+::ng-deep .custom-select .mat-mdc-form-field-subscript-wrapper,
+::ng-deep .custom-select .mdc-notched-outline {
+  display: none !important;
+}
+
+/* 讓下拉框長得像按鈕 */
+::ng-deep .custom-select .mat-mdc-select-trigger {
+  height: 36px;
+  line-height: 36px;
+  padding: 0 16px;
+  border: 1px solid #1976d2;
+  border-radius: 6px;
+  background-color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+/* hover 效果 */
+::ng-deep .custom-select .mat-mdc-select-trigger:hover {
+  background-color: #f5faff;
+  box-shadow: 0 0 6px rgba(25, 118, 210, 0.3);
+}
+
+/* 讓箭頭也置中 */
+::ng-deep .custom-select .mat-mdc-select-arrow {
+  margin-left: auto;
+}
+
+/* 調整 mat-select 的下拉選單樣式 */
+::ng-deep .mat-mdc-select-panel {
+  background-color: #fff !important;   /* 白底 */
+  opacity: 1 !important;              /* 不透明 */
+  border-radius: 6px;                 /* 圓角 */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* 陰影 */
+  max-height: 300px !important;       /* 避免太長 */
+  overflow-y: auto !important;
+  z-index: 1000 !important;           /* 蓋在最上面 */
+}
+
+/* 下拉選單裡的每個選項 */
+::ng-deep .mat-mdc-option {
+  font-size: 14px;
+  padding: 10px 16px;
+  color: #333;
+}
+
+::ng-deep .mat-mdc-option:hover {
+  background-color: #e3f2fd !important; /* hover 藍色淡底 */
+}
+
+/* 統一下拉選單字體樣式 */
+::ng-deep .mat-mdc-select-value {
+  font-weight: 400 !important; /* 預設是 500，改成 400 跟按鈕一樣 */
+  color: rgba(0,0,0,0.87) !important; /* 保持一致的深灰字色 */
+}
+

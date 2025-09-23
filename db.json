@@ -2,7 +2,7 @@
   "locations": [
     {
       "id": "0",
-      "name": "悅樂旅店‧台中站前 OLAH Poshtel Taichung",
+      "name": "悅樂旅店 OLAH Poshtel",
       "city": "台中市",
       "state": "中區",
       "photo": "https://angular.dev/assets/images/tutorials/common/bernard-hermant-CLKGGwIBTaY-unsplash.jpg",
@@ -18,7 +18,7 @@
       "city": "台中市",
       "state": "中區",
       "photo": "https://angular.dev/assets/images/tutorials/common/brandon-griggs-wR11KBaB86U-unsplash.jpg",
-      "availableUnits": 0,
+      "availableUnits": 3,
       "wifi": false,
       "laundry": true,
       "latitude": 24.136317,
@@ -26,99 +26,99 @@
     },
     {
       "id": "2",
-      "name": "In One City Inn 文華道會館",
-      "city": "台中市",
-      "state": "西屯區",
+      "name": "高雄日航酒店 Hotel Nikko Kaohsiung",
+      "city": "高雄市",
+      "state": "前鎮區",
       "photo": "https://angular.dev/assets/images/tutorials/common/i-do-nothing-but-love-lAyXdl1-Wmc-unsplash.jpg",
       "availableUnits": 1,
       "wifi": false,
       "laundry": false,
-      "latitude": 24.183045,
-      "longitude": 120.647126
+      "latitude": 22.620934,
+      "longitude": 120.300701
     },
     {
       "id": "3",
-      "name": "星享道酒店 In Sky Hotel",
-      "city": "台中市",
-      "state": "西屯區",
+      "name": "高雄萬豪酒店 Kaohsiung Marriott Hotel",
+      "city": "高雄市",
+      "state": "鼓山區",
       "photo": "https://angular.dev/assets/images/tutorials/common/ian-macdonald-W8z6aiwfi1E-unsplash.jpg",
       "availableUnits": 1,
       "wifi": true,
       "laundry": false,
-      "latitude": 24.182854,
-      "longitude": 120.647113
+      "latitude": 22.655460,
+      "longitude": 120.306430
     },
     {
       "id": "4",
-      "name": "天閣酒店 THE Tango Taichung",
-      "city": "台中市",
-      "state": "西屯區",
+      "name": "台北圓山大飯店",
+      "city": "台北市",
+      "state": "中山區",
       "photo": "https://angular.dev/assets/images/tutorials/common/krzysztof-hepner-978RAXoXnH4-unsplash.jpg",
       "availableUnits": 1,
       "wifi": true,
       "laundry": false,
-      "latitude": 24.148731,
-      "longitude": 120.64972
+      "latitude": 25.077300,
+      "longitude": 121.525800
     },
     {
       "id": "5",
-      "name": "愛之船 SPA 精品旅館",
-      "city": "台中市",
-      "state": "南區",
+      "name": "台北寒舍艾美酒店",
+      "city": "台北市",
+      "state": "信義區",
       "photo": "https://angular.dev/assets/images/tutorials/common/r-architecture-JvQ0Q5IkeMM-unsplash.jpg",
       "availableUnits": 2,
       "wifi": true,
       "laundry": true,
-      "latitude": 24.129773,
-      "longitude": 120.671354
+      "latitude": 25.038259,
+      "longitude": 121.568000
     },
     {
       "id": "6",
-      "name": "波特曼休閒商務汽車旅館 Potman Motel",
-      "city": "台中市",
-      "state": "西屯區",
+      "name": "台南晶英酒店 Silks Place Tainan",
+      "city": "台南市",
+      "state": "中西區",
       "photo": "https://angular.dev/assets/images/tutorials/common/phil-hearing-IYfp2Ixe9nM-unsplash.jpg",
       "availableUnits": 5,
       "wifi": true,
       "laundry": true,
-      "latitude": 24.165459,
-      "longitude": 120.640837
+      "latitude": 22.992342,
+      "longitude": 120.204620
     },
     {
       "id": "7",
-      "name": "虹星汽車旅舘",
-      "city": "台中市",
-      "state": "北屯區",
+      "name": "台南大員皇冠假日酒店 Crowne Plaza Tainan",
+      "city": "台南市",
+      "state": "安平區",
       "photo": "https://angular.dev/assets/images/tutorials/common/r-architecture-GGupkreKwxA-unsplash.jpg",
       "availableUnits": 2,
       "wifi": true,
       "laundry": true,
-      "latitude": 24.170396,
-      "longitude": 120.693977
+      "latitude": 23.000900,
+      "longitude": 120.152600
     },
     {
       "id": "8",
-      "name": "蘭夏精品會館",
-      "city": "台中市",
-      "state": "南屯區",
+      "name": "新竹老爺大酒店 Hotel Royal Hsinchu",
+      "city": "新竹市",
+      "state": "東區",
       "photo": "https://angular.dev/assets/images/tutorials/common/saru-robert-9rP3mxf8qWI-unsplash.jpg",
       "availableUnits": 10,
       "wifi": false,
       "laundry": false,
-      "latitude": 24.148486,
-      "longitude": 120.645211
+      "latitude": 24.801800,
+      "longitude": 120.973900
     },
     {
       "id": "9",
-      "name": "麗緹汽車旅館",
-      "city": "台中市",
-      "state": "北屯區",
+      "name": "新竹國賓大飯店 Ambassador Hotel",
+      "city": "新竹市",
+      "state": "東區",
       "photo": "https://angular.dev/assets/images/tutorials/common/webaliser-_TPTXZd9mOo-unsplash.jpg",
       "availableUnits": 6,
       "wifi": true,
       "laundry": true,
-      "latitude": 24.171563,
-      "longitude": 120.681467
+      "latitude": 24.800500,
+      "longitude": 120.971900
     }
   ],
   "applications": [
