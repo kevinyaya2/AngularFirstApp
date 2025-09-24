@@ -26,18 +26,19 @@ button {
 
 @media (min-width: 500px) and (max-width: 768px) {
   .results {
-      grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
   input[type="text"] {
-      width: 70%;
+    width: 70%;
   }   
 }
 
 @media (max-width: 499px) {
   .results {
-      grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
   }    
 }
+
 .search-bar {
   display: flex;
   align-items: center;
@@ -73,6 +74,7 @@ button[mat-raised-button]:hover {
   background-color: #5c6bc0;
   color: #fff;
 }
+
 td {
   padding: 10px 12px;
   border-bottom: 1px solid #ddd;
@@ -85,64 +87,24 @@ tr:hover td {
   background-color: #f1f5ff;
 }
 
-/* 隱藏原本的 mat-form-field 外框 */
-::ng-deep .custom-select .mat-mdc-form-field-subscript-wrapper,
-::ng-deep .custom-select .mdc-notched-outline {
-  display: none !important;
+/* 🎨 Material Theme 正規解法 - Select 樣式 */
+
+/* 🔹 讓下拉選單寬度乾淨，跟按鈕差不多 */
+.custom-select-field {
+  min-width: 140px;
+  max-width: 160px;
+  margin-right: 12px; /* 跟右邊按鈕間隔 */
 }
 
-/* 讓下拉框長得像按鈕 */
-::ng-deep .custom-select .mat-mdc-select-trigger {
-  height: 36px;
-  line-height: 36px;
-  padding: 0 16px;
-  border: 1px solid #1976d2;
-  border-radius: 6px;
-  background-color: white;
+/* 🔹 改善 outline 風格，讓它不會太突兀 */
+.custom-select-field.mat-mdc-form-field {
+  --mdc-outlined-text-field-outline-color: #1976d2; /* 框線顏色 */
+  --mdc-outlined-text-field-focus-outline-color: #1976d2; /* 聚焦顏色 */
+  --mdc-outlined-text-field-label-text-color: rgba(0,0,0,0.87);
+}
+
+/* 🔹 下拉選單選項 */
+.mat-mdc-option {
   font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  transition: all 0.2s ease;
+  padding: 8px 12px;
 }
-
-/* hover 效果 */
-::ng-deep .custom-select .mat-mdc-select-trigger:hover {
-  background-color: #f5faff;
-  box-shadow: 0 0 6px rgba(25, 118, 210, 0.3);
-}
-
-/* 讓箭頭也置中 */
-::ng-deep .custom-select .mat-mdc-select-arrow {
-  margin-left: auto;
-}
-
-/* 調整 mat-select 的下拉選單樣式 */
-::ng-deep .mat-mdc-select-panel {
-  background-color: #fff !important;   /* 白底 */
-  opacity: 1 !important;              /* 不透明 */
-  border-radius: 6px;                 /* 圓角 */
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* 陰影 */
-  max-height: 300px !important;       /* 避免太長 */
-  overflow-y: auto !important;
-  z-index: 1000 !important;           /* 蓋在最上面 */
-}
-
-/* 下拉選單裡的每個選項 */
-::ng-deep .mat-mdc-option {
-  font-size: 14px;
-  padding: 10px 16px;
-  color: #333;
-}
-
-::ng-deep .mat-mdc-option:hover {
-  background-color: #e3f2fd !important; /* hover 藍色淡底 */
-}
-
-/* 統一下拉選單字體樣式 */
-::ng-deep .mat-mdc-select-value {
-  font-weight: 400 !important; /* 預設是 500，改成 400 跟按鈕一樣 */
-  color: rgba(0,0,0,0.87) !important; /* 保持一致的深灰字色 */
-}
-
