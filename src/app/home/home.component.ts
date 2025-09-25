@@ -1,4 +1,11 @@
-import { Component, inject, OnInit, OnDestroy, ViewChild } from "@angular/core";
+import {
+  Component,
+  inject,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  AfterViewInit,
+} from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { HousingLocationComponent } from "../housing-location/housing-location.component";
 import { HousingLocation } from "../housinglocation";
@@ -11,6 +18,8 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
 import { MatSort, MatSortModule } from "@angular/material/sort";
 import { MatTabsModule } from "@angular/material/tabs";
+import { MatInputModule } from "@angular/material/input";
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
 
 // CDK Drag & Drop
 import {
@@ -22,8 +31,21 @@ import {
 // Pipe
 import { FirstNamePipe } from "../first-name.pipe";
 
-// RxJS
-import { Subject, debounceTime, distinctUntilChanged, takeUntil } from "rxjs";
+// Forms / RxJS
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  FormControl,
+} from "@angular/forms";
+import {
+  Subject,
+  debounceTime,
+  distinctUntilChanged,
+  takeUntil,
+  Observable,
+  map,
+  startWith,
+} from "rxjs";
 
 @Component({
   selector: "app-home",
@@ -37,13 +59,16 @@ import { Subject, debounceTime, distinctUntilChanged, takeUntil } from "rxjs";
     MatSelectModule,
     MatSortModule,
     DragDropModule,
-    FirstNamePipe,
     MatTabsModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   template: `
     <section>
       <form class="search-bar">
-        <!-- 輸入框搜尋 -->
+        <!-- 共用輸入框搜尋 -->
         <input
           type="text"
           placeholder="旅館名稱 / 城市 / 區域"
@@ -54,129 +79,145 @@ import { Subject, debounceTime, distinctUntilChanged, takeUntil } from "rxjs";
           <mat-label>選擇縣市</mat-label>
           <mat-select (selectionChange)="onCitySelect($event.value)">
             <mat-option value="">全部</mat-option>
-            <mat-option *ngFor="let city of cityList" [value]="city">{{
-              city
-            }}</mat-option>
+            <mat-option *ngFor="let city of cityList" [value]="city">
+              {{ city }}
+            </mat-option>
           </mat-select>
         </mat-form-field>
       </form>
     </section>
 
-    <!-- ✅ 改成 Tabs -->
-<mat-tab-group>
-  <!-- Tab 1: 卡片模式 -->
-  <mat-tab label="卡片模式">
-    <section class="results">
-      <app-housing-location
-        *ngFor="let housingLocation of dataSource.data"
-        [housingLocation]="housingLocation"
-      ></app-housing-location>
-    </section>
-  </mat-tab>
+    <!-- ✅ Tabs -->
+    <mat-tab-group>
+      <!-- Tab 1: 卡片模式 -->
+      <mat-tab label="卡片模式">
+        <section class="results">
+          <app-housing-location
+            *ngFor="let housingLocation of dataSource.data"
+            [housingLocation]="housingLocation"
+          ></app-housing-location>
+        </section>
+      </mat-tab>
 
-  <!-- Tab 2: 表格模式 -->
-  <mat-tab label="表格模式">
-    <table
-      mat-table
-      [dataSource]="dataSource"
-      matSort
-      cdkDropList
-      (cdkDropListDropped)="drop($event)"
-      class="mat-elevation-z8"
-    >
-      <!-- ID -->
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-      </ng-container>
+      <!-- Tab 2: 表格模式 -->
+      <mat-tab label="表格模式">
+        <!--  Autocomplete + 搜尋按鈕 -->
+        <div class="search-row">
+  <mat-form-field appearance="outline" class="custom-select-field">
+    <input
+      type="text"
+      placeholder="輸入旅館名稱"
+      matInput
+      [formControl]="nameControl"
+      [matAutocomplete]="auto"
+    />
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option
+        *ngFor="let option of filteredOptions | async"
+        [value]="option"
+      >
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
 
-      <!-- Name -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-      </ng-container>
+  <button mat-raised-button color="primary" (click)="searchByName()">
+    搜尋
+  </button>
+</div>
 
-      <!-- FirstName -->
-      <ng-container matColumnDef="firstName">
-        <th mat-header-cell *matHeaderCellDef>First Name</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.name | firstName }}
-        </td>
-      </ng-container>
+        <!-- Table -->
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          matSort
+          cdkDropList
+          (cdkDropListDropped)="drop($event)"
+          class="mat-elevation-z8"
+        >
+          <!-- ID -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+          </ng-container>
 
-      <!-- City -->
-      <ng-container matColumnDef="city">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>City</th>
-        <td mat-cell *matCellDef="let element">{{ element.city }}</td>
-      </ng-container>
+          <!-- Name -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+          </ng-container>
 
-      <!-- State -->
-      <ng-container matColumnDef="state">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>State</th>
-        <td mat-cell *matCellDef="let element">{{ element.state }}</td>
-      </ng-container>
+          <!-- City -->
+          <ng-container matColumnDef="city">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>City</th>
+            <td mat-cell *matCellDef="let element">{{ element.city }}</td>
+          </ng-container>
 
-      <!-- Units -->
-      <ng-container matColumnDef="availableUnits">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Units</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.availableUnits }}
-        </td>
-      </ng-container>
+          <!-- State -->
+          <ng-container matColumnDef="state">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>State</th>
+            <td mat-cell *matCellDef="let element">{{ element.state }}</td>
+          </ng-container>
 
-      <!-- Wifi -->
-      <ng-container matColumnDef="wifi">
-        <th mat-header-cell *matHeaderCellDef>Wifi</th>
-        <td mat-cell *matCellDef="let element">
-          <i
-            class="bi"
-            [ngClass]="
-              element.wifi
-                ? 'bi-check-circle-fill text-success'
-                : 'bi-x-circle-fill text-danger'
-            "
-          ></i>
-        </td>
-      </ng-container>
+          <!-- Units -->
+          <ng-container matColumnDef="availableUnits">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Units</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.availableUnits }}
+            </td>
+          </ng-container>
 
-      <!-- Laundry -->
-      <ng-container matColumnDef="laundry">
-        <th mat-header-cell *matHeaderCellDef>Laundry</th>
-        <td mat-cell *matCellDef="let element">
-          <i
-            class="bi"
-            [ngClass]="
-              element.laundry
-                ? 'bi-check-circle-fill text-success'
-                : 'bi-x-circle-fill text-danger'
-            "
-          ></i>
-        </td>
-      </ng-container>
+          <!-- Wifi -->
+          <ng-container matColumnDef="wifi">
+            <th mat-header-cell *matHeaderCellDef>Wifi</th>
+            <td mat-cell *matCellDef="let element">
+              <i
+                class="bi"
+                [ngClass]="
+                  element.wifi
+                    ? 'bi-check-circle-fill text-success'
+                    : 'bi-x-circle-fill text-danger'
+                "
+              ></i>
+            </td>
+          </ng-container>
 
-      <!-- Header & Row -->
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr
-        mat-row
-        *matRowDef="let row; columns: displayedColumns"
-        cdkDrag
-      ></tr>
-    </table>
-  </mat-tab>
-</mat-tab-group>
+          <!-- Laundry -->
+          <ng-container matColumnDef="laundry">
+            <th mat-header-cell *matHeaderCellDef>Laundry</th>
+            <td mat-cell *matCellDef="let element">
+              <i
+                class="bi"
+                [ngClass]="
+                  element.laundry
+                    ? 'bi-check-circle-fill text-success'
+                    : 'bi-x-circle-fill text-danger'
+                "
+              ></i>
+            </td>
+          </ng-container>
+
+          <!-- Header & Row -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumns"
+            cdkDrag
+          ></tr>
+        </table>
+      </mat-tab>
+    </mat-tab-group>
   `,
   styleUrls: ["./home.component.css"],
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   housingLocationList: HousingLocation[] = [];
   dataSource = new MatTableDataSource<HousingLocation>([]);
   housingService: HousingService = inject(HousingService);
 
-  
   displayedColumns: string[] = [
     "id",
     "name",
-    "firstName",
     "city",
     "state",
     "availableUnits",
@@ -191,6 +232,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatSort) sort!: MatSort;
 
+  // 🔑 Autocomplete 控制
+  nameControl = new FormControl("");
+  filteredOptions!: Observable<string[]>;
+
   constructor() {
     this.housingService
       .getAllHousingLocations()
@@ -202,6 +247,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // 原本輸入框搜尋
     this.searchSubject
       .pipe(
         debounceTime(1000),
@@ -211,12 +257,36 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe((text) => {
         this.filterResults(text);
       });
+
+    // Autocomplete 過濾邏輯
+    this.filteredOptions = this.nameControl.valueChanges.pipe(
+      startWith(""),
+      map((value) => this._filter(value || ""))
+    );
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.housingLocationList
+      .map((h) => h.name)
+      .filter((option) => option.toLowerCase().includes(filterValue));
+  }
+
+  searchByName() {
+    const keyword = this.nameControl.value?.toLowerCase() || "";
+    if (!keyword) {
+      this.dataSource.data = this.housingLocationList;
+      return;
+    }
+    this.dataSource.data = this.housingLocationList.filter((h) =>
+      h.name.toLowerCase().includes(keyword)
+    );
   }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
 
-    // 🔑 確保數字用數字排序
+    // 確保數字用數字排序
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
         case "id":
@@ -258,13 +328,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.dataSource.data = this.housingLocationList.filter(
       (h) =>
-        h.name.toLowerCase().includes(lowerText) || //  支援名稱
-        h.city.toLowerCase().includes(lowerText) || //  支援城市
-        h.state.toLowerCase().includes(lowerText) //  支援區域
+        h.name.toLowerCase().includes(lowerText) || // 名稱
+        h.city.toLowerCase().includes(lowerText) || // 城市
+        h.state.toLowerCase().includes(lowerText) // 區域
     );
   }
-
-  
 
   // 拖曳
   drop(event: CdkDragDrop<HousingLocation[]>) {
@@ -272,7 +340,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     moveItemInArray(data, event.previousIndex, event.currentIndex);
     this.dataSource.data = data;
 
-    //  拖曳後如果有排序狀態，立刻重新套用排序
+    // 拖曳後如果有排序狀態，立刻重新套用排序
     if (this.sort.active && this.sort.direction) {
       this.dataSource.data = this.dataSource.sortData(
         this.dataSource.data.slice(),
