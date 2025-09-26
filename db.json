@@ -119,7 +119,67 @@
       "laundry": true,
       "latitude": 24.800500,
       "longitude": 120.971900
-    }
+    },
+    {
+  "id": "10",
+  "name": "台中日月千禧酒店 Millennium Hotel Taichung",
+  "city": "台中市",
+  "state": "西屯區",
+  "photo": "https://angular.dev/assets/images/tutorials/common/bernard-hermant-CLKGGwIBTaY-unsplash.jpg",
+  "availableUnits": 4,
+  "wifi": true,
+  "laundry": true,
+  "latitude": 24.167240,
+  "longitude": 120.639500
+},
+{
+  "id": "11",
+  "name": "高雄中央公園英迪格酒店 Hotel Indigo Kaohsiung",
+  "city": "高雄市",
+  "state": "新興區",
+  "photo": "https://angular.dev/assets/images/tutorials/common/brandon-griggs-wR11KBaB86U-unsplash.jpg",
+  "availableUnits": 3,
+  "wifi": true,
+  "laundry": false,
+  "latitude": 22.629400,
+  "longitude": 120.302100
+},
+{
+  "id": "12",
+  "name": "台南香格里拉大酒店 Shangri-La's  Hotel Tainan",
+  "city": "台南市",
+  "state": "東區",
+  "photo": "https://angular.dev/assets/images/tutorials/common/i-do-nothing-but-love-lAyXdl1-Wmc-unsplash.jpg",
+  "availableUnits": 6,
+  "wifi": true,
+  "laundry": true,
+  "latitude": 22.997700,
+  "longitude": 120.213300
+},
+{
+  "id": "13",
+  "name": "新竹福華大飯店 Howard Plaza Hotel Hsinchu",
+  "city": "新竹市",
+  "state": "北區",
+  "photo": "https://angular.dev/assets/images/tutorials/common/ian-macdonald-W8z6aiwfi1E-unsplash.jpg",
+  "availableUnits": 5,
+  "wifi": false,
+  "laundry": true,
+  "latitude": 24.811000,
+  "longitude": 120.967500
+},
+{
+  "id": "14",
+  "name": "台北君悅酒店 Grand Hyatt Taipei",
+  "city": "台北市",
+  "state": "信義區",
+  "photo": "https://angular.dev/assets/images/tutorials/common/krzysztof-hepner-978RAXoXnH4-unsplash.jpg",
+  "availableUnits": 8,
+  "wifi": true,
+  "laundry": true,
+  "latitude": 25.034200,
+  "longitude": 121.562300
+}
   ],
   "applications": [
     {

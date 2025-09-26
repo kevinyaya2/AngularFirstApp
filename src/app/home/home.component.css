@@ -1,3 +1,4 @@
+/* 卡片模式排版 */
 .results {
   display: grid;
   column-gap: 14px;
@@ -7,47 +8,16 @@
   justify-content: space-around;
 }
 
-input[type="text"] {
-  border: solid 1px var(--primary-color);
-  padding: 10px;
-  border-radius: 8px;
-  margin-right: 4px;
-  display: inline-block;
-  width: 30%;
-}
-
-button {
-  padding: 10px;
-  border: solid 1px var(--primary-color);
-  background: var(--primary-color);
-  color: white;
-  border-radius: 8px;
-}
-
-@media (min-width: 500px) and (max-width: 768px) {
-  .results {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  input[type="text"] {
-    width: 70%;
-  }   
-}
-
-@media (max-width: 499px) {
-  .results {
-    grid-template-columns: 1fr;
-  }    
-}
-
+/* 搜尋列 */
 .search-bar {
   display: flex;
   align-items: center;
-  gap: 12px; /* 控制輸入框和按鈕之間的間距 */
+  gap: 12px;
   margin-bottom: 20px;
 }
 
 .search-bar input[type="text"] {
-  flex: 0 1 250px; /* 固定大約 250px，不會過長 */
+  flex: 0 1 250px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -57,9 +27,10 @@ button {
 }
 
 .search-bar input[type="text"]:focus {
-  border-color: #3f51b5; /* 聚焦時顏色 */
+  border-color: #3f51b5;
 }
 
+/* 按鈕 */
 button.primary,
 button[mat-raised-button] {
   padding: 6px 16px;
@@ -75,40 +46,37 @@ button[mat-raised-button]:hover {
   color: #fff;
 }
 
+/* 表格樣式 */
 td {
   padding: 10px 12px;
   border-bottom: 1px solid #ddd;
   font-size: 14px;
-  color: #333; /* 讓表格文字更深，對比度高 */
+  color: #333;
 }
 
-/* hover 效果 */
 tr:hover td {
   background-color: #f1f5ff;
 }
 
-/* 🎨 Material Theme 正規解法 - Select 樣式 */
-
-/* 🔹 讓下拉選單寬度乾淨，跟按鈕差不多 */
+/* Material 下拉選單修正 */
 .custom-select-field {
   min-width: 140px;
   max-width: 160px;
-  margin-right: 12px; /* 跟右邊按鈕間隔 */
+  margin-right: 12px;
 }
 
-/* 🔹 改善 outline 風格，讓它不會太突兀 */
 .custom-select-field.mat-mdc-form-field {
-  --mdc-outlined-text-field-outline-color: #1976d2; /* 框線顏色 */
-  --mdc-outlined-text-field-focus-outline-color: #1976d2; /* 聚焦顏色 */
-  --mdc-outlined-text-field-label-text-color: rgba(0,0,0,0.87);
+  --mdc-outlined-text-field-outline-color: #1976d2;
+  --mdc-outlined-text-field-focus-outline-color: #1976d2;
+  --mdc-outlined-text-field-label-text-color: rgba(0, 0, 0, 0.87);
 }
 
-/* 🔹 下拉選單選項 */
 .mat-mdc-option {
   font-size: 14px;
   padding: 8px 12px;
 }
 
+/* 表格上方搜尋列 */
 .search-row {
   display: flex;
   justify-content: center;
@@ -117,8 +85,51 @@ tr:hover td {
   margin: 30px 0;
 }
 
-/* 讓輸入框撐滿可用空間 */
 .search-row .custom-select-field {
-  flex: 1;      
-  min-width: 500px; /* 預設至少 200px，不會太窄 */
+  flex: 1;
+  min-width: 500px;
+}
+
+/* Spinner 載入動畫 */
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+/* 卡片淡入效果 */
+.fade-in {
+  animation: fadeIn 0.6s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* RWD */
+@media (min-width: 500px) and (max-width: 768px) {
+  .results {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .search-bar input[type="text"] {
+    width: 70%;
+  }
+}
+
+@media (max-width: 499px) {
+  .results {
+    grid-template-columns: 1fr;
+  }
+
+  .search-row .custom-select-field {
+    min-width: 200px;
+  }
 }
