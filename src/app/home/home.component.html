@@ -1,0 +1,158 @@
+<!-- 語言切換 -->
+    <div class="lang-switcher">
+      <button mat-button (click)="switchLanguage('zh')">中文</button>
+      <button mat-button (click)="switchLanguage('en')">English</button>
+      <button mat-button (click)="switchLanguage('ja')">日本語</button>
+      <button mat-button (click)="switchLanguage('ko')">한국어</button>
+    </div>
+
+    <section>
+      <form class="search-bar">
+        <input
+          type="text"
+          [placeholder]="'SEARCH_PLACEHOLDER' | translate"
+          (input)="onSearch($event)"
+        />
+
+        <mat-form-field appearance="outline" class="custom-select-field">
+          <mat-label>{{ 'SELECT_CITY' | translate }}</mat-label>
+          <mat-select (selectionChange)="onCitySelect($event.value)">
+            <mat-option value="">{{ 'ALL' | translate }}</mat-option>
+            <mat-option *ngFor="let city of cityList" [value]="city">
+              {{ city }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+    </section>
+
+    <!-- Tabs -->
+    <mat-tab-group>
+      <!-- 卡片模式 -->
+      <mat-tab [label]="'CARD_MODE' | translate">
+        <section class="results">
+          <app-housing-location
+            *ngFor="let housingLocation of visibleLocations"
+            [housingLocation]="housingLocation"
+          ></app-housing-location>
+        </section>
+
+        <!-- 載入中 spinner -->
+        <div *ngIf="isLoading" class="spinner-container">
+          <mat-spinner diameter="40"></mat-spinner>
+        </div>
+      </mat-tab>
+
+      <!-- 表格模式 -->
+      <mat-tab [label]="'TABLE_MODE' | translate">
+        <div class="search-row">
+          <mat-form-field appearance="outline" class="custom-select-field">
+            <input
+              type="text"
+              [placeholder]="'SEARCH_INPUT' | translate"
+              matInput
+              [formControl]="nameControl"
+              [matAutocomplete]="auto"
+            />
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option
+                *ngFor="let option of filteredOptions | async"
+                [value]="option"
+              >
+                {{ option }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <button mat-raised-button color="primary" (click)="searchByName()">
+            {{ 'SEARCH' | translate }}
+          </button>
+        </div>
+
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          matSort
+          cdkDropList
+          (cdkDropListDropped)="drop($event)"
+          class="mat-elevation-z8"
+        >
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="city">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>City</th>
+            <td mat-cell *matCellDef="let element">{{ element.city }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="state">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>State</th>
+            <td mat-cell *matCellDef="let element">{{ element.state }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="availableUnits">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Units</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.availableUnits }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="wifi">
+            <th mat-header-cell *matHeaderCellDef>Wifi</th>
+            <td mat-cell *matCellDef="let element">
+              <i
+                class="bi"
+                [ngClass]="
+                  element.wifi
+                    ? 'bi-check-circle-fill text-success'
+                    : 'bi-x-circle-fill text-danger'
+                "
+              ></i>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="laundry">
+            <th mat-header-cell *matHeaderCellDef>Laundry</th>
+            <td mat-cell *matCellDef="let element">
+              <i
+                class="bi"
+                [ngClass]="
+                  element.laundry
+                    ? 'bi-check-circle-fill text-success'
+                    : 'bi-x-circle-fill text-danger'
+                "
+              ></i>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumns"
+            cdkDrag
+          ></tr>
+        </table>
+      </mat-tab>
+
+      <!-- 地圖模式 -->
+      <mat-tab [label]="'MAP_MODE' | translate">
+        <google-map
+          height="500px"
+          width="100%"
+          [center]="mapCenter"
+          [zoom]="7"
+        >
+          <map-marker
+            *ngFor="let h of housingLocationList"
+            [position]="{ lat: h.latitude!, lng: h.longitude! }"
+            [title]="h.name"
+          ></map-marker>
+        </google-map>
+      </mat-tab>
+    </mat-tab-group>

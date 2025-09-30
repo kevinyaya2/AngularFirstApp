@@ -49,6 +49,9 @@ import {
 // Google Maps
 import { GoogleMapsModule } from "@angular/google-maps";
 
+// i18n
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
+
 @Component({
   selector: "app-home",
   standalone: true,
@@ -68,159 +71,9 @@ import { GoogleMapsModule } from "@angular/google-maps";
     ReactiveFormsModule,
     GoogleMapsModule,
     MatProgressSpinnerModule,
+    TranslateModule,
   ],
-  template: `
-    <section>
-      <form class="search-bar">
-        <input
-          type="text"
-          placeholder="旅館名稱 / 城市 / 區域"
-          (input)="onSearch($event)"
-        />
-
-        <mat-form-field appearance="outline" class="custom-select-field">
-          <mat-label>選擇縣市</mat-label>
-          <mat-select (selectionChange)="onCitySelect($event.value)">
-            <mat-option value="">全部</mat-option>
-            <mat-option *ngFor="let city of cityList" [value]="city">
-              {{ city }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </form>
-    </section>
-
-    <!-- Tabs -->
-    <mat-tab-group>
-      <!-- 卡片模式 (滾動載入) -->
-      <mat-tab label="卡片模式">
-        <section class="results">
-          <app-housing-location
-            *ngFor="let housingLocation of visibleLocations"
-            [housingLocation]="housingLocation"
-          ></app-housing-location>
-        </section>
-
-        <!-- 載入中 spinner -->
-        <div *ngIf="isLoading" class="spinner-container">
-          <mat-spinner diameter="40"></mat-spinner>
-        </div>
-      </mat-tab>
-
-      <!-- 表格模式 -->
-      <mat-tab label="表格模式">
-        <div class="search-row">
-          <mat-form-field appearance="outline" class="custom-select-field">
-            <input
-              type="text"
-              placeholder="輸入旅館名稱"
-              matInput
-              [formControl]="nameControl"
-              [matAutocomplete]="auto"
-            />
-            <mat-autocomplete #auto="matAutocomplete">
-              <mat-option
-                *ngFor="let option of filteredOptions | async"
-                [value]="option"
-              >
-                {{ option }}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-          <button mat-raised-button color="primary" (click)="searchByName()">
-            搜尋
-          </button>
-        </div>
-
-        <table
-          mat-table
-          [dataSource]="dataSource"
-          matSort
-          cdkDropList
-          (cdkDropListDropped)="drop($event)"
-          class="mat-elevation-z8"
-        >
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-            <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="city">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>City</th>
-            <td mat-cell *matCellDef="let element">{{ element.city }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="state">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>State</th>
-            <td mat-cell *matCellDef="let element">{{ element.state }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="availableUnits">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Units</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.availableUnits }}
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="wifi">
-            <th mat-header-cell *matHeaderCellDef>Wifi</th>
-            <td mat-cell *matCellDef="let element">
-              <i
-                class="bi"
-                [ngClass]="
-                  element.wifi
-                    ? 'bi-check-circle-fill text-success'
-                    : 'bi-x-circle-fill text-danger'
-                "
-              ></i>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="laundry">
-            <th mat-header-cell *matHeaderCellDef>Laundry</th>
-            <td mat-cell *matCellDef="let element">
-              <i
-                class="bi"
-                [ngClass]="
-                  element.laundry
-                    ? 'bi-check-circle-fill text-success'
-                    : 'bi-x-circle-fill text-danger'
-                "
-              ></i>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr
-            mat-row
-            *matRowDef="let row; columns: displayedColumns"
-            cdkDrag
-          ></tr>
-        </table>
-      </mat-tab>
-
-      <!-- 地圖模式 -->
-      <mat-tab label="地圖模式">
-        <google-map
-          height="500px"
-          width="100%"
-          [center]="mapCenter"
-          [zoom]="7"
-        >
-          <map-marker
-            *ngFor="let h of housingLocationList"
-            [position]="{ lat: h.latitude!, lng: h.longitude! }"
-            [title]="h.name"
-          ></map-marker>
-        </google-map>
-      </mat-tab>
-    </mat-tab-group>
-  `,
+  templateUrl: "./home.component.html",
   styleUrls: ["./home.component.css"],
 })
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -259,7 +112,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   // Google Map
   mapCenter = { lat: 23.6978, lng: 120.9605 }; // 台灣中心
 
-  constructor() {
+  constructor(private translate: TranslateService) {
+    this.translate.setDefaultLang("zh"); // 預設語言
     this.housingService
       .getAllHousingLocations()
       .then((housingLocationList: HousingLocation[]) => {
@@ -269,6 +123,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.loadMore(); // 先載入第一批
         this.dataSource.data = housingLocationList; // 表格模式用全量
       });
+  }
+
+  switchLanguage(lang: string) {
+    this.translate.use(lang);
   }
 
   ngOnInit() {
@@ -331,33 +189,32 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onCitySelect(city: string) {
-  if (!city) {
-    this.filteredList = this.housingLocationList;
-  } else {
-    this.filteredList = this.housingLocationList.filter((h) => h.city === city);
+    if (!city) {
+      this.filteredList = this.housingLocationList;
+    } else {
+      this.filteredList = this.housingLocationList.filter(
+        (h) => h.city === city
+      );
+    }
+    this.resetAndLoad(); // 重置卡片模式
+    this.dataSource.data = this.filteredList; // 表格模式
   }
-  this.resetAndLoad(); // 重置卡片模式
-  this.dataSource.data = this.filteredList; // 表格模式
-}
-
 
   filterResults(text: string) {
-  if (!text) {
-    this.filteredList = this.housingLocationList;
-  } else {
-    const lowerText = text.toLowerCase();
-    this.filteredList = this.housingLocationList.filter(
-      (h) =>
-        h.name.toLowerCase().includes(lowerText) ||
-        h.city.toLowerCase().includes(lowerText) ||
-        h.state.toLowerCase().includes(lowerText)
-    );
+    if (!text) {
+      this.filteredList = this.housingLocationList;
+    } else {
+      const lowerText = text.toLowerCase();
+      this.filteredList = this.housingLocationList.filter(
+        (h) =>
+          h.name.toLowerCase().includes(lowerText) ||
+          h.city.toLowerCase().includes(lowerText) ||
+          h.state.toLowerCase().includes(lowerText)
+      );
+    }
+    this.resetAndLoad(); // 重置卡片模式
+    this.dataSource.data = this.filteredList; // 表格模式
   }
-  this.resetAndLoad(); // 重置卡片模式
-  this.dataSource.data = this.filteredList; // 表格模式
-}
-
-  
 
   // 分批載入
   @HostListener("window:scroll", [])
@@ -371,34 +228,34 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private loadMore() {
-  if (this.isLoading || !this.hasMore) return;
+    if (this.isLoading || !this.hasMore) return;
 
-  this.isLoading = true;
+    this.isLoading = true;
 
-  setTimeout(() => {
-    const next = this.filteredList.slice(
-      this.currentIndex,
-      this.currentIndex + this.batchSize
-    );
+    setTimeout(() => {
+      const next = this.filteredList.slice(
+        this.currentIndex,
+        this.currentIndex + this.batchSize
+      );
 
-    this.visibleLocations.push(...next);
-    this.currentIndex += this.batchSize;
+      this.visibleLocations.push(...next);
+      this.currentIndex += this.batchSize;
 
-    if (this.currentIndex >= this.filteredList.length) {
-      this.hasMore = false;
-    }
+      if (this.currentIndex >= this.filteredList.length) {
+        this.hasMore = false;
+      }
 
-    this.isLoading = false;
-  }, 600);
-}
+      this.isLoading = false;
+    }, 600);
+  }
 
   // 當搜尋或篩選時，要重置
-private resetAndLoad() {
-  this.visibleLocations = [];
-  this.currentIndex = 0;
-  this.hasMore = true;
-  this.loadMore();
-}
+  private resetAndLoad() {
+    this.visibleLocations = [];
+    this.currentIndex = 0;
+    this.hasMore = true;
+    this.loadMore();
+  }
 
   // 拖曳
   drop(event: CdkDragDrop<HousingLocation[]>) {

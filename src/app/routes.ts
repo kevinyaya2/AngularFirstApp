@@ -1,8 +1,9 @@
-import {Routes} from '@angular/router';
-import {HomeComponent} from './home/home.component';
-import {DetailsComponent} from './details/details.component';
+import { Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { DetailsComponent } from './details/details.component';
 import { DetailsTemplateComponent } from './details-template/details-template.component';
-const routeConfig: Routes = [
+
+export const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
@@ -15,4 +16,3 @@ const routeConfig: Routes = [
   },
   { path: 'details-template/:id', component: DetailsTemplateComponent }, // Template
 ];
-export default routeConfig;
