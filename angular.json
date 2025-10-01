@@ -50,9 +50,20 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.css","node_modules/@angular/material/prebuilt-themes/indigo-pink.css"],
-            "scripts": []
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.css",
+              "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+            ],
+            "scripts": [],
+            "server": "src/main.server.ts",
+            "prerender": false,
+            "ssr": {
+              "entry": "src/main.server.ts"
+            }
           },
           "configurations": {
             "production": {
@@ -89,6 +100,40 @@
             }
           },
           "defaultConfiguration": "development"
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/first-app/server",
+            "main": "src/main.server.ts",
+            "tsConfig": "tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media"
+            }
+          }
+        },
+        "serve-ssr": {
+          "builder": "@angular-devkit/build-angular:ssr-dev-server",
+          "options": {
+            "browserTarget": "first-app:build",
+            "serverTarget": "first-app:server"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "first-app:build:production",
+              "serverTarget": "first-app:server:production"
+            }
+          }
+        },
+        "prerender": {
+          "builder": "@angular-devkit/build-angular:prerender",
+          "options": {
+            "browserTarget": "first-app:build:production",
+            "serverTarget": "first-app:server:production",
+            "routes": ["/"]
+          }
         },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n",
