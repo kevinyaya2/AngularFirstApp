@@ -66,9 +66,9 @@ tr:hover td {
 }
 
 .custom-select-field.mat-mdc-form-field {
-  --mdc-outlined-text-field-outline-color: #1976d2;
-  --mdc-outlined-text-field-focus-outline-color: #1976d2;
-  --mdc-outlined-text-field-label-text-color: rgba(0, 0, 0, 0.87);
+  --mat-form-field-outlined-outline-color: #1976d2;
+  --mat-form-field-outlined-focus-outline-color: #1976d2;
+  --mat-form-field-outlined-label-text-color: rgba(0, 0, 0, 0.87);
 }
 
 .mat-mdc-option {
