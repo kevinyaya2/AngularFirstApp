@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ActivatedRoute } from '@angular/router';
 import { HousingService } from '../housing.service';
 import { HousingLocation } from '../housinglocation';
@@ -9,7 +9,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-details',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   template: `
     <article>
       <img
@@ -17,66 +17,78 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
         [src]="housingLocation?.photo"
         alt="Exterior photo of {{ housingLocation?.name }}"
         crossorigin
-      />
-      <section class="listing-description">
-        <h2 class="listing-heading">{{ housingLocation?.name }}</h2>
-        <p class="listing-location">{{ housingLocation?.city }}, {{ housingLocation?.state }}</p>
-      </section>
-
-      <section class="listing-features">
-        <h2 class="section-heading">About this housing location</h2>
-        <ul>
-          <li>Units available: {{ housingLocation?.availableUnits }}</li>
-          <li>Does this location have wifi: {{ housingLocation?.wifi }}</li>
-          <li>Does this location have laundry: {{ housingLocation?.laundry }}</li>
-        </ul>
-      </section>
-
-      <!--  Google Map -->
-      <section class="listing-map" *ngIf="mapUrl">
-        <h2 class="section-heading">位置地圖</h2>
-        <iframe
-          width="100%"
-          height="400"
-          style="border:0"
-          [src]="mapUrl"
-          loading="lazy"
-          allowfullscreen>
-        </iframe>
-      </section>
-
-      <section class="listing-apply">
-        <h2 class="section-heading">Apply now to live here</h2>
-        <form [formGroup]="applyForm" (ngSubmit)="submitApplication()">
-          <label for="first-name">First Name</label>
-          <input id="first-name" type="text" formControlName="firstName" />
-          <div *ngIf="applyForm.get('firstName')?.hasError('required') && applyForm.get('firstName')?.touched" class="error">
-            First name is required
-          </div>
-          <div *ngIf="applyForm.get('firstName')?.hasError('duplicate')" class="error">
-            This first name already exists
-          </div>
-
-          <label for="last-name">Last Name</label>
-          <input id="last-name" type="text" formControlName="lastName" />
-          <div *ngIf="applyForm.get('lastName')?.hasError('required') && applyForm.get('lastName')?.touched" class="error">
-            Last name is required
-          </div>
-
-          <label for="email">Email</label>
-          <input id="email" type="email" formControlName="email" />
-          <div *ngIf="applyForm.get('email')?.hasError('required') && applyForm.get('email')?.touched" class="error">
-            Email is required
-          </div>
-          <div *ngIf="applyForm.get('email')?.hasError('email') && applyForm.get('email')?.touched" class="error">
-            Invalid email format
-          </div>
-
-          <button type="submit" class="primary" [disabled]="applyForm.invalid">Apply now</button>
-        </form>
-      </section>
-    </article>
-  `,
+        />
+        <section class="listing-description">
+          <h2 class="listing-heading">{{ housingLocation?.name }}</h2>
+          <p class="listing-location">{{ housingLocation?.city }}, {{ housingLocation?.state }}</p>
+        </section>
+    
+        <section class="listing-features">
+          <h2 class="section-heading">About this housing location</h2>
+          <ul>
+            <li>Units available: {{ housingLocation?.availableUnits }}</li>
+            <li>Does this location have wifi: {{ housingLocation?.wifi }}</li>
+            <li>Does this location have laundry: {{ housingLocation?.laundry }}</li>
+          </ul>
+        </section>
+    
+        <!--  Google Map -->
+        @if (mapUrl) {
+          <section class="listing-map">
+            <h2 class="section-heading">位置地圖</h2>
+            <iframe
+              width="100%"
+              height="400"
+              style="border:0"
+              [src]="mapUrl"
+              loading="lazy"
+              allowfullscreen>
+            </iframe>
+          </section>
+        }
+    
+        <section class="listing-apply">
+          <h2 class="section-heading">Apply now to live here</h2>
+          <form [formGroup]="applyForm" (ngSubmit)="submitApplication()">
+            <label for="first-name">First Name</label>
+            <input id="first-name" type="text" formControlName="firstName" />
+            @if (applyForm.get('firstName')?.hasError('required') && applyForm.get('firstName')?.touched) {
+              <div class="error">
+                First name is required
+              </div>
+            }
+            @if (applyForm.get('firstName')?.hasError('duplicate')) {
+              <div class="error">
+                This first name already exists
+              </div>
+            }
+    
+            <label for="last-name">Last Name</label>
+            <input id="last-name" type="text" formControlName="lastName" />
+            @if (applyForm.get('lastName')?.hasError('required') && applyForm.get('lastName')?.touched) {
+              <div class="error">
+                Last name is required
+              </div>
+            }
+    
+            <label for="email">Email</label>
+            <input id="email" type="email" formControlName="email" />
+            @if (applyForm.get('email')?.hasError('required') && applyForm.get('email')?.touched) {
+              <div class="error">
+                Email is required
+              </div>
+            }
+            @if (applyForm.get('email')?.hasError('email') && applyForm.get('email')?.touched) {
+              <div class="error">
+                Invalid email format
+              </div>
+            }
+    
+            <button type="submit" class="primary" [disabled]="applyForm.invalid">Apply now</button>
+          </form>
+        </section>
+      </article>
+    `,
   styleUrls: ['./details.component.css'],
 })
 export class DetailsComponent {
