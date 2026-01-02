@@ -1,0 +1,106 @@
+/* 全螢幕容器 */
+.intro-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99999;
+  overflow: hidden;
+  pointer-events: none; /* 避免動畫期間干擾 */
+}
+
+/* 黑幕共用樣式 */
+.curtain {
+  position: absolute;
+  top: 0;
+  width: 50vw;
+  height: 100vh;
+  background-color: #000;
+  /* 1.2秒後開始移動，持續 1秒，使用 ease-in-out */
+  animation-duration: 1s;
+  animation-delay: 1.2s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+/* 左半黑幕 */
+.curtain-left {
+  left: 0;
+  animation-name: slideOutLeft;
+}
+
+/* 右半黑幕 */
+.curtain-right {
+  right: 0;
+  animation-name: slideOutRight;
+}
+
+/* 中央文字 */
+.intro-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100000;
+
+  color: #ffffff;
+  font-size: 4rem;
+  font-weight: 700;
+  letter-spacing: 0.8rem;
+  opacity: 0;
+
+  /* 文字動畫：淡入 → 停留 → 淡出，總共 1.2秒 */
+  animation: textFadeInOut 1.2s ease-in-out forwards;
+}
+
+/* === 動畫關鍵影格 === */
+
+/* 文字淡入淡出 */
+@keyframes textFadeInOut {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+  25% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  75% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+}
+
+/* 左半黑幕向左滑出 */
+@keyframes slideOutLeft {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* 右半黑幕向右滑出 */
+@keyframes slideOutRight {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* RWD：手機版調整文字大小 */
+@media (max-width: 768px) {
+  .intro-text {
+    font-size: 2.5rem;
+    letter-spacing: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .intro-text {
+    font-size: 2rem;
+    letter-spacing: 0.3rem;
+  }
+}
