@@ -1,0 +1,173 @@
+/* ===== GLOBAL PAGE LAYOUT ===== */
+article {
+  max-width: 880px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* ===== HOUSING PHOTO ===== */
+.listing-photo {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 18px;
+  box-shadow: 0px 10px 25px rgba(0,0,0,0.15);
+  transition: transform 0.35s ease;
+}
+
+.listing-photo:hover {
+  transform: scale(1.02);
+}
+
+/* ===== HEADER SECTION ===== */
+.listing-description {
+  text-align: center;
+  margin-top: 22px;
+}
+
+.listing-heading {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #333;
+}
+
+.listing-location {
+  margin-top: 6px;
+  font-size: 18px;
+  color: #666;
+}
+
+/* ===== FEATURES SECTION ===== */
+.listing-features {
+  margin-top: 32px;
+  background: rgba(255,255,255,0.45);
+  backdrop-filter: blur(10px);
+  padding: 25px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.4);
+  box-shadow: 0px 8px 20px rgba(0,0,0,0.08);
+}
+
+.section-heading {
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.listing-features ul {
+  padding-left: 20px;
+}
+
+.listing-features li {
+  margin-bottom: 6px;
+  font-size: 16px;
+  color: #444;
+}
+
+/* ===== APPLY FORM (Signal Form) ===== */
+.listing-apply {
+  margin-top: 45px;
+  padding: 28px;
+  background: rgba(255,255,255,0.55);
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.5);
+  box-shadow: 0px 12px 30px rgba(0,0,0,0.1);
+}
+
+/* LABELS */
+.listing-apply label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  margin-top: 14px;
+  color: #333;
+}
+
+/* INPUTS */
+.listing-apply input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  transition: all 0.25s ease;
+  outline: none;
+  background: #fafafa;
+}
+
+.listing-apply input:focus {
+  border-color: #3f51b5;
+  background: white;
+  box-shadow: 0px 0px 0px 4px rgba(63, 81, 181, 0.15);
+}
+
+/* ERROR MESSAGE */
+.error {
+  color: #e53935;
+  margin-top: 4px;
+  font-size: 14px;
+}
+
+/* ===== BUTTON GROUP ===== */
+.button-group {
+  margin-top: 25px;
+  display: flex;
+  gap: 12px;
+}
+
+button {
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(135deg, #3f51b5, #5c6bc0);
+  color: white;
+  box-shadow: 0px 6px 16px rgba(63, 81, 181, 0.3);
+  transition: all 0.25s ease;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #283593, #3f51b5);
+  box-shadow: 0 8px 20px rgba(63, 81, 181, 0.45);
+  transform: translateY(-2px);
+}
+
+button:disabled {
+  background: #b0bec5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Cancel Button */
+.cancel-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 18px;
+  background: #eeeeee;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #444;
+  font-weight: 600;
+  transition: 0.25s;
+}
+
+.cancel-btn:hover {
+  background: #e0e0e0;
+}
+
+/* ===== RWD ===== */
+@media (max-width: 600px) {
+  .listing-photo {
+    height: 240px;
+  }
+
+  .listing-apply,
+  .listing-features {
+    padding: 20px;
+  }
+}

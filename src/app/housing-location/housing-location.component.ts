@@ -23,6 +23,8 @@ import { RouterModule } from '@angular/router';
 
       <!-- 新增 Template-Driven -->
       <a [routerLink]="['/details-template', housingLocation.id]">Apply (Template)</a>
+
+      <a [routerLink]="['/signal-form', housingLocation.id]">Signal Form</a>
     </section>
   `,
   styleUrls: ['./housing-location.component.css'],

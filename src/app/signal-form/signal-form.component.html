@@ -1,0 +1,64 @@
+<article *ngIf="housingLocation() as h">
+  <!-- 房屋圖片 -->
+  <img
+    class="listing-photo"
+    [src]="h.photo"
+    alt="Exterior photo of {{ h.name }}"
+  />
+
+  <!-- 房屋資料 -->
+  <section class="listing-description">
+    <h2 class="listing-heading">{{ h.name }}</h2>
+    <p class="listing-location">{{ h.city }}, {{ h.state }}</p>
+  </section>
+
+  <section class="listing-features">
+    <h2>About this housing location</h2>
+    <ul>
+      <li>Units available: {{ h.availableUnits }}</li>
+      <li>Wifi: {{ h.wifi ? 'Yes' : 'No' }}</li>
+      <li>Laundry: {{ h.laundry ? 'Yes' : 'No' }}</li>
+    </ul>
+  </section>
+
+  <!-- Signal Form -->
+  <section class="listing-apply">
+    <h2>Apply now (Signal Form)</h2>
+
+    <!-- First Name -->
+    <label for="fn">First Name</label>
+    <input
+      id="fn"
+      type="text"
+      [value]="form().firstName"
+      (input)="updateField('firstName', $event.target.value)"
+    />
+
+    <!-- Last Name -->
+    <label for="ln">Last Name</label>
+    <input
+      id="ln"
+      type="text"
+      [value]="form().lastName"
+      (input)="updateField('lastName', $event.target.value)"
+    />
+
+    <!-- Email -->
+    <label for="em">Email</label>
+    <input
+      id="em"
+      type="email"
+      [value]="form().email"
+      (input)="updateField('email', $event.target.value)"
+    />
+
+    @if (!isValid()) {
+      <p style="color:red; margin-top:10px;">表單資料格式不正確</p>
+    }
+
+    <div class="button-group">
+      <button (click)="submit()" [disabled]="!isValid()">送出</button>
+      <a routerLink="/" class="cancel-btn">取消</a>
+    </div>
+  </section>
+</article>

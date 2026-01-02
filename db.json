@@ -45,8 +45,8 @@
       "availableUnits": 1,
       "wifi": true,
       "laundry": false,
-      "latitude": 22.655460,
-      "longitude": 120.306430
+      "latitude": 22.65546,
+      "longitude": 120.30643
     },
     {
       "id": "4",
@@ -57,8 +57,8 @@
       "availableUnits": 1,
       "wifi": true,
       "laundry": false,
-      "latitude": 25.077300,
-      "longitude": 121.525800
+      "latitude": 25.0773,
+      "longitude": 121.5258
     },
     {
       "id": "5",
@@ -70,7 +70,7 @@
       "wifi": true,
       "laundry": true,
       "latitude": 25.038259,
-      "longitude": 121.568000
+      "longitude": 121.568
     },
     {
       "id": "6",
@@ -82,7 +82,7 @@
       "wifi": true,
       "laundry": true,
       "latitude": 22.992342,
-      "longitude": 120.204620
+      "longitude": 120.20462
     },
     {
       "id": "7",
@@ -93,8 +93,8 @@
       "availableUnits": 2,
       "wifi": true,
       "laundry": true,
-      "latitude": 23.000900,
-      "longitude": 120.152600
+      "latitude": 23.0009,
+      "longitude": 120.1526
     },
     {
       "id": "8",
@@ -105,8 +105,8 @@
       "availableUnits": 10,
       "wifi": false,
       "laundry": false,
-      "latitude": 24.801800,
-      "longitude": 120.973900
+      "latitude": 24.8018,
+      "longitude": 120.9739
     },
     {
       "id": "9",
@@ -117,69 +117,69 @@
       "availableUnits": 6,
       "wifi": true,
       "laundry": true,
-      "latitude": 24.800500,
-      "longitude": 120.971900
+      "latitude": 24.8005,
+      "longitude": 120.9719
     },
     {
-  "id": "10",
-  "name": "台中日月千禧酒店 Millennium Hotel Taichung",
-  "city": "台中市",
-  "state": "西屯區",
-  "photo": "https://angular.dev/assets/images/tutorials/common/bernard-hermant-CLKGGwIBTaY-unsplash.jpg",
-  "availableUnits": 4,
-  "wifi": true,
-  "laundry": true,
-  "latitude": 24.167240,
-  "longitude": 120.639500
-},
-{
-  "id": "11",
-  "name": "高雄中央公園英迪格酒店 Hotel Indigo Kaohsiung",
-  "city": "高雄市",
-  "state": "新興區",
-  "photo": "https://angular.dev/assets/images/tutorials/common/brandon-griggs-wR11KBaB86U-unsplash.jpg",
-  "availableUnits": 3,
-  "wifi": true,
-  "laundry": false,
-  "latitude": 22.629400,
-  "longitude": 120.302100
-},
-{
-  "id": "12",
-  "name": "台南香格里拉大酒店 Shangri-La's  Hotel Tainan",
-  "city": "台南市",
-  "state": "東區",
-  "photo": "https://angular.dev/assets/images/tutorials/common/i-do-nothing-but-love-lAyXdl1-Wmc-unsplash.jpg",
-  "availableUnits": 6,
-  "wifi": true,
-  "laundry": true,
-  "latitude": 22.997700,
-  "longitude": 120.213300
-},
-{
-  "id": "13",
-  "name": "新竹福華大飯店 Howard Plaza Hotel Hsinchu",
-  "city": "新竹市",
-  "state": "北區",
-  "photo": "https://angular.dev/assets/images/tutorials/common/ian-macdonald-W8z6aiwfi1E-unsplash.jpg",
-  "availableUnits": 5,
-  "wifi": false,
-  "laundry": true,
-  "latitude": 24.811000,
-  "longitude": 120.967500
-},
-{
-  "id": "14",
-  "name": "台北君悅酒店 Grand Hyatt Taipei",
-  "city": "台北市",
-  "state": "信義區",
-  "photo": "https://angular.dev/assets/images/tutorials/common/krzysztof-hepner-978RAXoXnH4-unsplash.jpg",
-  "availableUnits": 8,
-  "wifi": true,
-  "laundry": true,
-  "latitude": 25.034200,
-  "longitude": 121.562300
-}
+      "id": "10",
+      "name": "台中日月千禧酒店 Millennium Hotel Taichung",
+      "city": "台中市",
+      "state": "西屯區",
+      "photo": "https://angular.dev/assets/images/tutorials/common/bernard-hermant-CLKGGwIBTaY-unsplash.jpg",
+      "availableUnits": 4,
+      "wifi": true,
+      "laundry": true,
+      "latitude": 24.16724,
+      "longitude": 120.6395
+    },
+    {
+      "id": "11",
+      "name": "高雄中央公園英迪格酒店 Hotel Indigo Kaohsiung",
+      "city": "高雄市",
+      "state": "新興區",
+      "photo": "https://angular.dev/assets/images/tutorials/common/brandon-griggs-wR11KBaB86U-unsplash.jpg",
+      "availableUnits": 3,
+      "wifi": true,
+      "laundry": false,
+      "latitude": 22.6294,
+      "longitude": 120.3021
+    },
+    {
+      "id": "12",
+      "name": "台南香格里拉大酒店 Shangri-La's  Hotel Tainan",
+      "city": "台南市",
+      "state": "東區",
+      "photo": "https://angular.dev/assets/images/tutorials/common/i-do-nothing-but-love-lAyXdl1-Wmc-unsplash.jpg",
+      "availableUnits": 6,
+      "wifi": true,
+      "laundry": true,
+      "latitude": 22.9977,
+      "longitude": 120.2133
+    },
+    {
+      "id": "13",
+      "name": "新竹福華大飯店 Howard Plaza Hotel Hsinchu",
+      "city": "新竹市",
+      "state": "北區",
+      "photo": "https://angular.dev/assets/images/tutorials/common/ian-macdonald-W8z6aiwfi1E-unsplash.jpg",
+      "availableUnits": 5,
+      "wifi": false,
+      "laundry": true,
+      "latitude": 24.811,
+      "longitude": 120.9675
+    },
+    {
+      "id": "14",
+      "name": "台北君悅酒店 Grand Hyatt Taipei",
+      "city": "台北市",
+      "state": "信義區",
+      "photo": "https://angular.dev/assets/images/tutorials/common/krzysztof-hepner-978RAXoXnH4-unsplash.jpg",
+      "availableUnits": 8,
+      "wifi": true,
+      "laundry": true,
+      "latitude": 25.0342,
+      "longitude": 121.5623
+    }
   ],
   "applications": [
     {
@@ -211,6 +211,18 @@
       "firstName": "Jason",
       "lastName": "Shiue",
       "email": "jason@example.com"
+    },
+    {
+      "id": "5047",
+      "firstName": "Shelly",
+      "lastName": "Chen",
+      "email": "shelly@gmail.com"
+    },
+    {
+      "id": "eedf",
+      "firstName": "Daisy",
+      "lastName": "Lin",
+      "email": "daisy@yahoo.com.tw"
     }
   ]
 }

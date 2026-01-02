@@ -15,4 +15,13 @@ export const routes: Routes = [
     title: 'Home details',
   },
   { path: 'details-template/:id', component: DetailsTemplateComponent }, // Template
+  {
+  path: 'signal-form/:id',
+  loadComponent: () =>
+    import('./signal-form/signal-form.component').then(
+      (m) => m.SignalFormComponent
+    ),
+  title: 'Signal Form Demo',
+  },
+
 ];

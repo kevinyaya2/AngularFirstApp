@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { HousingLocation } from './housinglocation';
 
 @Injectable({
@@ -7,6 +7,12 @@ import { HousingLocation } from './housinglocation';
 export class HousingService {
   url = 'http://localhost:3000/locations';
   appUrl = 'http://localhost:3000/applications';
+
+  signalForms = signal<any[]>([]);
+
+  constructor() {
+    this.loadSignalForms();
+  }
 
   async getAllHousingLocations(): Promise<HousingLocation[]> {
     const data = await fetch(this.url);
@@ -31,5 +37,35 @@ export class HousingService {
     const response = await fetch(`${this.appUrl}?firstName=${firstName}`);
     const results = await response.json();
     return results.length > 0;
+  }
+
+  async loadSignalForms() {
+    try {
+      const res = await fetch(`${this.appUrl}`);
+      const list = await res.json();
+      this.signalForms.set(list);
+    } catch (err) {
+      console.error('Failed to load signal forms:', err);
+    }
+  }
+
+  async submitSignalForm(data: { firstName: string; lastName: string; email: string }) {
+    try {
+      const res = await fetch(this.appUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      const saved = await res.json();
+
+      // 更新 signal
+      this.signalForms.update((forms) => [...forms, saved]);
+
+      return saved;
+    } catch (err) {
+      console.error('Failed to submit signal form:', err);
+      throw err;
+    }
   }
 }
