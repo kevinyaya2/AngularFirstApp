@@ -101,6 +101,13 @@
           },
           "defaultConfiguration": "development"
         },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "tsconfig.spec.json",
+            "coverage": true
+          }
+        },
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
